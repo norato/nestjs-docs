@@ -29,7 +29,6 @@ export class CatsController {
 
   @Get()
   findAll(@Query() query, @Res() res) {
-    console.log(this.coreService.log('cats'));
     res.status(HttpStatus.OK).json(this.catsService.findAll());
   }
 
