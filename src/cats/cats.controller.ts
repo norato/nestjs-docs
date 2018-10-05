@@ -11,16 +11,19 @@ import {
   HttpStatus,
   ForbiddenException,
   UseFilters,
+  UsePipes,
 } from '@nestjs/common';
 import { CatDto } from './interfaces';
 import { CatsService } from './services';
 import { HttpExceptionFilter } from 'core/http.filter';
+import { TypeValidationPipe } from 'core/validation/validation.pipe';
 
 @Controller('cats')
 export class CatsController {
   constructor(private readonly catsService: CatsService) {}
 
   @Post()
+  @UsePipes(new TypeValidationPipe())
   create(@Body() createCatDto: CatDto): CatDto {
     this.catsService.create(createCatDto);
     return createCatDto;
