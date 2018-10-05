@@ -1,3 +1,4 @@
+import { CoreService } from './../core/core.service';
 import {
   Controller,
   Get,
@@ -15,7 +16,10 @@ import { CatsService } from './services';
 
 @Controller('cats')
 export class CatsController {
-  constructor(private readonly catsService: CatsService) {}
+  constructor(
+    private readonly catsService: CatsService,
+    private readonly coreService: CoreService,
+  ) {}
 
   @Post()
   create(@Body() createCatDto: CatDto): CatDto {
@@ -25,6 +29,7 @@ export class CatsController {
 
   @Get()
   findAll(@Query() query, @Res() res) {
+    console.log(this.coreService.log('cats'));
     res.status(HttpStatus.OK).json(this.catsService.findAll());
   }
 
