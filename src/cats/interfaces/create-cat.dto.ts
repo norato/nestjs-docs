@@ -1,7 +1,3 @@
 import { Cat } from './cat.interface';
 
-export class CreateCatDto implements Cat {
-  readonly name: string;
-  readonly age: number;
-  readonly breed: string;
-}
+export type CatDto = Pick<Cat, 'name' | 'age' | 'breed'>;

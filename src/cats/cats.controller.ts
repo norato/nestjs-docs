@@ -10,7 +10,7 @@ import {
   Res,
   HttpStatus,
 } from '@nestjs/common';
-import { CreateCatDto } from './interfaces';
+import { CatDto } from './interfaces';
 import { CatsService } from './services';
 
 @Controller('cats')
@@ -18,7 +18,7 @@ export class CatsController {
   constructor(private readonly catsService: CatsService) {}
 
   @Post()
-  create(@Body() createCatDto: CreateCatDto): CreateCatDto {
+  create(@Body() createCatDto: CatDto): CatDto {
     this.catsService.create(createCatDto);
     return createCatDto;
   }
