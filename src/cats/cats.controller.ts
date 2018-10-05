@@ -1,4 +1,3 @@
-import { CoreService } from './../core/core.service';
 import {
   Controller,
   Get,
@@ -10,16 +9,16 @@ import {
   Delete,
   Res,
   HttpStatus,
+  ForbiddenException,
+  UseFilters,
 } from '@nestjs/common';
 import { CatDto } from './interfaces';
 import { CatsService } from './services';
+import { HttpExceptionFilter } from 'core/http.filter';
 
 @Controller('cats')
 export class CatsController {
-  constructor(
-    private readonly catsService: CatsService,
-    private readonly coreService: CoreService,
-  ) {}
+  constructor(private readonly catsService: CatsService) {}
 
   @Post()
   create(@Body() createCatDto: CatDto): CatDto {
@@ -38,8 +37,9 @@ export class CatsController {
   }
 
   @Put(':id')
+  @UseFilters(new HttpExceptionFilter())
   update(@Param('id') id, @Body() updateCatDto) {
-    return `This action updates a #${id} cat`;
+    throw new ForbiddenException();
   }
 
   @Delete(':id')
