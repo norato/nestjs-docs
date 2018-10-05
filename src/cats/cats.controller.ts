@@ -10,20 +10,22 @@ import {
   Res,
   HttpStatus,
 } from '@nestjs/common';
-import { CreateCatDto } from './create-cat.dto';
+import { CreateCatDto } from './interfaces';
+import { CatsService } from './services';
 
 @Controller('cats')
 export class CatsController {
+  constructor(private readonly catsService: CatsService) {}
+
   @Post()
   create(@Body() createCatDto: CreateCatDto): CreateCatDto {
+    this.catsService.create(createCatDto);
     return createCatDto;
   }
 
   @Get()
   findAll(@Query() query, @Res() res) {
-    console.log(query);
-    const result = `This action returns all cats (limit: ${query.limit} items)`;
-    res.status(HttpStatus.OK).json(result);
+    res.status(HttpStatus.OK).json(this.catsService.findAll());
   }
 
   @Get(':id')
