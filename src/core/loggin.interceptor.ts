@@ -12,7 +12,9 @@ export class LogginInterceptor implements NestInterceptor {
 
     const now = Date.now();
     return call$.pipe(
-      tap(it => console.log(`After at: ${now}\nfrom LogginInterceptor: `, it)),
+      tap(it =>
+        console.log(`After at: ${now}\nfrom LogginInterceptor: ${it}\n`),
+      ),
     );
   }
 }

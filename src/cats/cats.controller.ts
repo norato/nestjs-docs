@@ -1,3 +1,4 @@
+import { Id } from './../core/id/id.decorator';
 import {
   Controller,
   Get,
@@ -41,18 +42,18 @@ export class CatsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id) {
+  findOne(@Id('testing') id) {
     return `This action returns a #${id} cat`;
   }
 
   @Put(':id')
   @UseFilters(new HttpExceptionFilter())
-  update(@Param('id') id, @Body() updateCatDto) {
+  update(@Id('testing') id, @Body() updateCatDto) {
     throw new ForbiddenException();
   }
 
   @Delete(':id')
-  remove(@Param('id') id) {
+  remove(@Id('testing') id) {
     return `This action removes a #${id} cat`;
   }
 }
