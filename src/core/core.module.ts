@@ -3,6 +3,7 @@ import { CoreService } from './core.service';
 import { LoggerMiddleware } from './logger/logger.middleware';
 import { DynamicModule } from '@nestjs/common/interfaces';
 import { TypeValidationPipe } from './validation/validation.pipe';
+import { RolesGuard } from './roles.guard';
 
 @Global()
 @Module({})
@@ -16,6 +17,7 @@ export class CoreModule {
         { provide: CoreService, useValue: coreService },
         { provide: LoggerMiddleware, useValue: loggerMiddleware },
         TypeValidationPipe,
+        RolesGuard,
       ],
       exports: [CoreService, LoggerMiddleware],
     };

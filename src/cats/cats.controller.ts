@@ -12,13 +12,16 @@ import {
   ForbiddenException,
   UseFilters,
   UsePipes,
+  UseGuards,
 } from '@nestjs/common';
 import { CatDto } from './interfaces';
 import { CatsService } from './services';
 import { HttpExceptionFilter } from 'core/http.filter';
 import { TypeValidationPipe } from 'core/validation/validation.pipe';
+import { RolesGuard } from 'core/roles.guard';
 
 @Controller('cats')
+@UseGuards(RolesGuard)
 export class CatsController {
   constructor(private readonly catsService: CatsService) {}
 
