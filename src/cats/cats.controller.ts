@@ -3,9 +3,7 @@ import {
   Controller,
   Get,
   Post,
-  Param,
   Body,
-  Query,
   Put,
   Delete,
   Res,
@@ -16,7 +14,7 @@ import {
   UseInterceptors,
   HttpStatus,
 } from '@nestjs/common';
-import { CatDto } from './interfaces';
+import { CatDto, Cat } from './interfaces';
 import { CatsService } from './services';
 import { HttpExceptionFilter } from 'core/http.filter';
 import { TypeValidationPipe } from 'core/validation/validation.pipe';
@@ -31,15 +29,16 @@ export class CatsController {
 
   @Post()
   @UsePipes(new TypeValidationPipe())
-  create(@Body() createCatDto: CatDto): CatDto {
-    this.catsService.create(createCatDto);
-    return createCatDto;
+  async create(@Body() createCatDto: CatDto, @Res() res): Promise<CatDto> {
+    return await res
+      .status(HttpStatus.OK)
+      .json(this.catsService.create(createCatDto));
   }
 
   @Get()
-  findAll(@Param('ninja_id') ninjaId, @Query() query, @Res() res) {
-    console.log(ninjaId);
-    res.status(HttpStatus.OK).json(this.catsService.findAll());
+  async findAll(@Res() res) {
+    const cats = await this.catsService.findAll();
+    return res.status(HttpStatus.OK).json(cats);
   }
 
   @Get(':id')
