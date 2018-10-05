@@ -9,12 +9,12 @@ import {
   Put,
   Delete,
   Res,
-  HttpStatus,
   ForbiddenException,
   UseFilters,
   UsePipes,
   UseGuards,
   UseInterceptors,
+  HttpStatus,
 } from '@nestjs/common';
 import { CatDto } from './interfaces';
 import { CatsService } from './services';
@@ -23,7 +23,7 @@ import { TypeValidationPipe } from 'core/validation/validation.pipe';
 import { RolesGuard } from 'core/roles.guard';
 import { LogginInterceptor } from 'core/loggin.interceptor';
 
-@Controller('cats')
+@Controller()
 @UseGuards(RolesGuard)
 @UseInterceptors(LogginInterceptor)
 export class CatsController {
@@ -37,7 +37,8 @@ export class CatsController {
   }
 
   @Get()
-  findAll(@Query() query, @Res() res) {
+  findAll(@Param('ninja_id') ninjaId, @Query() query, @Res() res) {
+    console.log(ninjaId);
     res.status(HttpStatus.OK).json(this.catsService.findAll());
   }
 
