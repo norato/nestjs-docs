@@ -1,9 +1,3 @@
-import {
-  Module,
-  NestModule,
-  MiddlewareConsumer,
-  RequestMethod,
-} from '@nestjs/common';
 import { Routes, RouterModule } from 'nest-router';
 import { HelmetMiddleware } from '@nest-middlewares/helmet';
 import { AppController } from './app.controller';
@@ -13,6 +7,14 @@ import { CoreModule } from './core/core.module';
 import { LoggerMiddleware } from 'core/logger/logger.middleware';
 import { NinjaModule } from './ninja/ninja.module';
 import { DatabaseModule } from './database/database.module';
+import { JsonPlaceholderModule } from './json-placeholder/json-placeholder.module';
+import {
+  Module,
+  NestModule,
+  MiddlewareConsumer,
+  RequestMethod,
+} from '@nestjs/common';
+import { GraphQLModule } from '@nestjs/graphql';
 
 const routes: Routes = [
   {
@@ -25,6 +27,10 @@ const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'json-placeholder',
+    module: JsonPlaceholderModule,
+  },
 ];
 
 @Module({
@@ -34,6 +40,10 @@ const routes: Routes = [
     CatsModule,
     NinjaModule,
     DatabaseModule,
+    JsonPlaceholderModule,
+    GraphQLModule.forRoot({
+      typePaths: ['./**/*.graphql'],
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
