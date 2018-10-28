@@ -1,10 +1,24 @@
 type Query {
   getPosts: [Post]
+  getPost(id: ID!): Post
+  getUsers: [User]
+  getUser(id: ID!): User
 }
 
 type Post {
   userId: Int
+  user: User
   id: Int
   title: String
   body: String
+}
+
+type User {
+  id: Int
+  name: String
+  username: String
+  email: String
+  phone: String
+  website: String
+  posts: [Post]
 }
