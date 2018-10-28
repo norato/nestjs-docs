@@ -30,4 +30,10 @@ export class PostResolver {
     const { userId } = post;
     return await this.userResolver.getUser(userId);
   }
+
+  @ResolveProperty()
+  async comments(@Parent() post) {
+    const { id } = post;
+    return await this.JsonPlaceholderService.getPostComments(id);
+  }
 }

@@ -5,10 +5,7 @@ import {
   ResolveProperty,
   Parent,
 } from '@nestjs/graphql';
-import {
-  JsonPlaceholderService,
-  postQuery,
-} from 'json-placeholder/json-placeholder.service';
+import { JsonPlaceholderService } from 'json-placeholder/json-placeholder.service';
 
 @Resolver('User')
 export class UserResolver {
@@ -29,9 +26,6 @@ export class UserResolver {
   @ResolveProperty()
   async posts(@Parent() user) {
     const { id } = user;
-    const query: postQuery = {
-      userId: id,
-    };
-    return await this.JsonPlaceholderService.getPosts(query);
+    return await this.JsonPlaceholderService.getUserPosts(id);
   }
 }

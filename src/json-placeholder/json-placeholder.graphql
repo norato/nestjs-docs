@@ -3,6 +3,8 @@ type Query {
   getPost(id: ID!): Post
   getUsers: [User]
   getUser(id: ID!): User
+  getComments: [Comment]
+  getComment(id: ID!): Comment
 }
 
 type Post {
@@ -11,6 +13,7 @@ type Post {
   id: Int
   title: String
   body: String
+  comments: [Comment]
 }
 
 type User {
@@ -21,4 +24,13 @@ type User {
   phone: String
   website: String
   posts: [Post]
+}
+
+type Comment {
+  postId: Int
+  post: Post
+  id: Int
+  name: String
+  email: String
+  body: String
 }

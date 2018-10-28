@@ -1,13 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { JsonPlaceholderService } from './json-placeholder.service';
-import { HttpService, HttpModule } from '@nestjs/common';
+import { HttpModule } from '@nestjs/common';
 
 describe('JsonPlaceholderService', () => {
   let service: JsonPlaceholderService;
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [HttpModule],
-      providers: [JsonPlaceholderService, HttpService],
+      providers: [JsonPlaceholderService],
     }).compile();
     service = module.get<JsonPlaceholderService>(JsonPlaceholderService);
   });

@@ -1,19 +1,14 @@
 import { Injectable, HttpService } from '@nestjs/common';
-import { Post } from './json-placeholder.interfaces';
-import { Observable, config } from 'rxjs';
+import { Post, User, Comment } from './json-placeholder.interfaces';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-export interface postQuery {
-  userId?: number;
-}
 @Injectable()
 export class JsonPlaceholderService {
   private readonly baseUrl = 'https://jsonplaceholder.typicode.com';
   constructor(private readonly httpService: HttpService) {}
 
-  getPosts(params?: postQuery): Observable<Post[]> {
-    const query = params.userId ? `userId=${params.userId}` : null;
-    const url = this.buildUrl({ path: 'posts', query });
+  getPosts(): Observable<Post[]> {
+    const url = this.buildUrl({ path: 'posts' });
     return this.resolve<Post[]>(url);
   }
 
@@ -22,14 +17,36 @@ export class JsonPlaceholderService {
     return this.resolve<Post>(url);
   }
 
-  getUsers(): Observable<Post> {
-    const url = this.buildUrl({ path: 'users' });
-    return this.resolve<Post>(url);
+  getPostComments(postId: string) {
+    const query = `postId=${postId}`;
+    const url = this.buildUrl({ path: 'comments', query });
+    return this.resolve<Post[]>(url);
   }
 
-  getUser(id: number): Observable<Post> {
+  getUsers(): Observable<User[]> {
+    const url = this.buildUrl({ path: 'users' });
+    return this.resolve<User[]>(url);
+  }
+
+  getUser(id: number): Observable<User> {
     const url = this.buildUrl({ path: 'users', id });
-    return this.resolve<Post>(url);
+    return this.resolve<User>(url);
+  }
+
+  getUserPosts(userId: string) {
+    const query = `userId=${userId}`;
+    const url = this.buildUrl({ path: 'posts', query });
+    return this.resolve<Post[]>(url);
+  }
+
+  getComments(): Observable<Comment[]> {
+    const url = this.buildUrl({ path: 'comments' });
+    return this.resolve<Comment[]>(url);
+  }
+
+  getComment(id: number): Observable<Comment> {
+    const url = this.buildUrl({ path: 'comments', id });
+    return this.resolve<Comment>(url);
   }
 
   private resolve<T = any>(url: string): Observable<T> {
